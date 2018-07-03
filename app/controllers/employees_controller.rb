@@ -66,13 +66,10 @@ class EmployeesController < ApplicationController
     
       @employees.each do |employee|
         charset = Array('a'...'z')
-      letters = Array.new(6) {charset.sample}.join
-      var1 = rand(10)
-      var2 = rand(10)
-      var3 = rand(10)
-      numbers = Array[var1,var2,var3]
-      number = numbers.join
-        @email = employee.first_name + "." + employee.last_name + "." + number + "." + letters + "@heliumservices.com"
+        letters = Array.new(6) {charset.sample}.join
+        numset = Array(0...9)
+        num = Array.new(3) {numset.sample}.join
+        @email = employee.first_name.downcase + "." + employee.last_name.downcase + "." + num + "." + letters + "@heliumservices.com"
         employee.update(email: @email)
         
       end
