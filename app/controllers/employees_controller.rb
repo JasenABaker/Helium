@@ -60,6 +60,24 @@ class EmployeesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def generate
+    @employees = Employee.all
+    
+      @employees.each do |employee|
+        charset = Array('a'...'z')
+      letters = Array.new(6) {charset.sample}.join
+      var1 = rand(10)
+      var2 = rand(10)
+      var3 = rand(10)
+      numbers = Array[var1,var2,var3]
+      number = numbers.join
+        @email = employee.first_name + "." + employee.last_name + "." + number + "." + letters + "@heliumservices.com"
+        employee.update(email: @email)
+        
+      end
+      redirect_to employees_url
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +87,9 @@ class EmployeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.require(:employee).permit(:birth_date, :first_name, :last_name, :gender, :title, :email)
+      params.require(:employee).permit(:birth_date, :first_name, :last_name, :gender, :title, :id)
     end
-end
+
+  end
+
+
